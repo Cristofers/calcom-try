@@ -6,7 +6,7 @@ export default async function BookingsPage() {
   let error = null;
 
   try {
-    bookings = await getAllBookings();
+    bookings = await getAllBookings({});
   } catch (err) {
     error = err instanceof Error ? err.message : "Failed to fetch bookings";
   }

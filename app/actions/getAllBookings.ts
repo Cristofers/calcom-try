@@ -3,7 +3,13 @@
 import { getApiKey } from "@/lib/server/getApiKey";
 import type { Booking } from "@/lib/types";
 
-export async function getAllBookings(): Promise<Booking[]> {
+interface GetAllBookingsProps {
+  eventTypeID?: string;
+}
+
+export async function getAllBookings({
+  eventTypeID,
+}: GetAllBookingsProps): Promise<Booking[]> {
   const apiKey = getApiKey();
   const options = {
     method: "GET",
@@ -13,11 +19,13 @@ export async function getAllBookings(): Promise<Booking[]> {
     },
   };
 
-  const response = await fetch(
-    "https://api.cal.com/v2/bookings?take=100",
-    options,
-  );
+  const url = new URL("/v2/bookings", "https://api.cal.com");
+  url.searchParams.append("take", "100");
+  if (eventTypeID) {
+    url.searchParams.append("eventTypeId", eventTypeID);
+  }
 
+  const response = await fetch(url.toString(), options);
   if (!response.ok) {
     throw new Error(`Failed to fetch bookings: ${response.statusText}`);
   }

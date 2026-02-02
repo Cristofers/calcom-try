@@ -3,6 +3,7 @@ import { getEventType } from "@/app/actions/getEventType";
 import { getAvailableSlots } from "@/app/actions/getAvailableSlots";
 import { EventTypeView } from "./view";
 import { getEventTypeLink } from "@/app/actions/getEventTypeLink";
+import { getAllBookings } from "@/app/actions/getAllBookings";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -22,6 +23,8 @@ export default async function EventTypeDetailPage({ params }: PageProps) {
 
   const availableSlots = await getAvailableSlots(id, startDate, endDate);
   const eventTypeLink = await getEventTypeLink(id);
+
+  const bookings = await getAllBookings({ eventTypeID: id });
   return (
     <EventTypeView
       eventType={eventType}
@@ -30,6 +33,7 @@ export default async function EventTypeDetailPage({ params }: PageProps) {
       eventTypeLink={eventTypeLink.link}
       eventSlug={eventTypeLink.slug}
       eventUserName={eventTypeLink.username}
+      bookings={bookings}
     />
   );
 }

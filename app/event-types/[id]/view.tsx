@@ -1,5 +1,5 @@
 "use client";
-import { AvailableSlot } from "@/lib/types";
+import { AvailableSlot, Booking } from "@/lib/types";
 import Link from "next/link";
 import { CalCalendar } from "@/app/component/cal-calendar";
 
@@ -16,14 +16,15 @@ interface EventTypeViewProps {
   eventTypeLink: string;
   eventSlug: string;
   eventUserName: string;
+  bookings: Booking[];
 }
 
 export const EventTypeView = ({
   eventType,
-  availableSlots,
   eventTypeLink,
   eventSlug,
   eventUserName,
+  bookings,
 }: EventTypeViewProps) => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -80,54 +81,86 @@ export const EventTypeView = ({
 
         <CalCalendar calendarSlug={eventSlug} userName={eventUserName} />
 
-        {/* <div className="bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">
-            Available Slots
-          </h2>
+        {/* Bookings render */}
+        <div className="bg-white rounded-lg shadow-md p-8 mt-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">Bookings</h2>
 
-          {!availableSlots && (
-            <p className="text-gray-500">Loading available slots...</p>
+          {bookings.length === 0 && (
+            <p className="text-gray-500">No bookings found.</p>
           )}
 
-          {availableSlots && availableSlots.length === 0 && (
-            <p className="text-gray-500">
-              No available slots found for the next 7 days.
-            </p>
-          )}
-
-          {availableSlots && availableSlots.length > 0 && (
-            <div className="space-y-6">
-              {availableSlots.map((daySlots) => (
+          {bookings.length > 0 && (
+            <div className="space-y-4">
+              {bookings.map((booking) => (
                 <div
-                  key={daySlots.date}
-                  className="border-b border-gray-200 pb-6 last:border-b-0"
+                  key={booking.id}
+                  className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
                 >
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    {new Date(daySlots.date + "T00:00:00").toLocaleDateString(
-                      "en-US",
-                      {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      },
-                    )}
-                  </h3>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                    {daySlots.slots.map((slot, index) => (
-                      <button
-                        key={index}
-                        className="px-4 py-2 border border-blue-300 rounded-md text-blue-600 hover:bg-blue-50 hover:border-blue-400 transition-colors text-sm font-medium"
-                      >
-                        {slot.time}
-                      </button>
-                    ))}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        {booking.title}
+                      </h3>
+                      <div className="space-y-1 text-sm text-gray-600">
+                        <p>
+                          <span className="font-medium">Date:</span>{" "}
+                          {new Date(booking.startTime).toLocaleDateString(
+                            "en-US",
+                            {
+                              weekday: "long",
+                              year: "numeric",
+                              month: "long",
+                              day: "numeric",
+                            },
+                          )}
+                        </p>
+                        <p>
+                          <span className="font-medium">Time:</span>{" "}
+                          {new Date(booking.startTime).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}{" "}
+                          -{" "}
+                          {new Date(booking.endTime).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}
+                        </p>
+                        {booking.attendees && booking.attendees.length > 0 && (
+                          <p>
+                            <span className="font-medium">Attendees:</span>{" "}
+                            {booking.attendees
+                              .map((a) => `${a.name} (${a.email})`)
+                              .join(", ")}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        booking.status === "accepted"
+                          ? "bg-green-100 text-green-800"
+                          : booking.status === "pending"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : booking.status === "cancelled"
+                              ? "bg-red-100 text-red-800"
+                              : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
+                      {booking.status}
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </div> */}
+        </div>
       </div>
     </div>
   );
