@@ -2,6 +2,7 @@ import { AvailableSlot } from "@/lib/types";
 import { getApiKey } from "@/lib/server/getApiKey";
 import { CALCOM_URL } from "@/lib/const";
 import { TimeSlot } from "@/lib/types";
+export const TIMEZONE = "America/Santo_Domingo";
 
 export async function getAvailableSlots(
   eventTypeId: string,
@@ -21,17 +22,14 @@ export async function getAvailableSlots(
     },
   };
 
-  const response = await fetch(
-    `${CALCOM_URL}/slots?start=${startStr}&end=${endStr}&eventTypeId=${eventTypeId}`,
-    options,
-  );
+  const url = `${CALCOM_URL}/slots?start=${startStr}&end=${endStr}&eventTypeId=${eventTypeId}&timeZone=${TIMEZONE}`;
+  const response = await fetch(url, options);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch available slots: ${response.statusText}`);
   }
 
   const result = await response.json();
-
   // Transform the response: data is an object with date keys
   // e.g., { "2026-02-03": [{ "start": "2026-02-03T09:00:00.000Z" }] }
   const availableSlots: AvailableSlot[] = [];

@@ -96,12 +96,15 @@ export const EventTypeView = ({
                   className="border-b border-gray-200 pb-6 last:border-b-0"
                 >
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    {new Date(daySlots.date).toLocaleDateString("en-US", {
-                      weekday: "long",
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
+                    {new Date(daySlots.date + "T00:00:00").toLocaleDateString(
+                      "en-US",
+                      {
+                        weekday: "long",
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      },
+                    )}
                   </h3>
                   <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
                     {daySlots.slots.map((slot, index) => (

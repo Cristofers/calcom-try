@@ -1,6 +1,4 @@
 "use server";
-import Link from "next/link";
-import { notFound } from "next/navigation";
 import { getEventType } from "@/app/actions/getEventType";
 import { getAvailableSlots } from "@/app/actions/getAvailableSlots";
 import { EventTypeView } from "./view";
