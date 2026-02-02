@@ -42,3 +42,24 @@ export interface AvailableSlot {
   date: string;
   slots: TimeSlot[];
 }
+
+export interface Attendee {
+  name: string;
+  email: string;
+  timeZone: string;
+}
+
+export interface Booking {
+  id: number;
+  uid: string;
+  title: string;
+  status: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  eventType: {
+    id: number;
+    slug: string;
+  };
+  attendees: Attendee[];
+}
