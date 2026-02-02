@@ -1,6 +1,7 @@
 "use client";
 import { AvailableSlot } from "@/lib/types";
 import Link from "next/link";
+import { CalCalendar } from "@/app/component/cal-calendar";
 
 interface EventTypeViewProps {
   eventType: {
@@ -13,12 +14,16 @@ interface EventTypeViewProps {
   availableSlots: AvailableSlot[];
   eventTypeID: string;
   eventTypeLink: string;
+  eventSlug: string;
+  eventUserName: string;
 }
 
 export const EventTypeView = ({
   eventType,
   availableSlots,
   eventTypeLink,
+  eventSlug,
+  eventUserName,
 }: EventTypeViewProps) => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -73,7 +78,9 @@ export const EventTypeView = ({
           )}
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-8">
+        <CalCalendar calendarSlug={eventSlug} userName={eventUserName} />
+
+        {/* <div className="bg-white rounded-lg shadow-md p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">
             Available Slots
           </h2>
@@ -120,7 +127,7 @@ export const EventTypeView = ({
               ))}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -1,7 +1,11 @@
 import { CALCOM_URL } from "@/lib/const";
 import { getApiKey } from "@/lib/server/getApiKey";
 
-export async function getEventTypeLink(id: string): Promise<string> {
+export async function getEventTypeLink(id: string): Promise<{
+  username: string;
+  slug: string;
+  link: string;
+}> {
   const apiKey = getApiKey();
 
   //   Coach User
@@ -32,5 +36,9 @@ export async function getEventTypeLink(id: string): Promise<string> {
   const eventTypeData = await eventTypeResponse.json();
   console.log("eventTypeData->", eventTypeData);
 
-  return `https://cal.com/${userData.data.username}/${eventTypeData.data.eventType.slug}`;
+  return {
+    username: userData.data.username as string,
+    slug: eventTypeData.data.eventType.slug as string,
+    link: `https://cal.com/${userData.data.username}/${eventTypeData.data.eventType.slug}`,
+  };
 }

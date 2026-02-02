@@ -27,7 +27,9 @@ export default async function EventTypeDetailPage({ params }: PageProps) {
       eventType={eventType}
       availableSlots={availableSlots}
       eventTypeID={id}
-      eventTypeLink={eventTypeLink}
+      eventTypeLink={eventTypeLink.link}
+      eventSlug={eventTypeLink.slug}
+      eventUserName={eventTypeLink.username}
     />
   );
 }
