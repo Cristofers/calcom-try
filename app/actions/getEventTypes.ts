@@ -1,16 +1,14 @@
-import { CALCOM_URL } from "@/lib/const";
 import { getApiKey } from "@/lib/server/getApiKey";
 import { EventType } from "@/lib/types";
 
 export async function getEventTypes(): Promise<EventType[]> {
   const apiKey = getApiKey();
 
-  const response = await fetch(`${CALCOM_URL}/event-types`, {
+  const response = await fetch(`${process.env.CALCOM_URL!}/event-types`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       "cal-api-version": "2024-06-14",
     },
-    // next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
 
   if (!response.ok) {

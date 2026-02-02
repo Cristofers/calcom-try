@@ -1,4 +1,3 @@
-import { CALCOM_URL } from "@/lib/const";
 import { getApiKey } from "@/lib/server/getApiKey";
 
 export async function getEventType(id: string): Promise<{
@@ -10,7 +9,7 @@ export async function getEventType(id: string): Promise<{
 }> {
   const apiKey = getApiKey();
 
-  const response = await fetch(`${CALCOM_URL}/event-types/${id}`, {
+  const response = await fetch(`${process.env.CALCOM_URL!}/event-types/${id}`, {
     headers: {
       Authorization: `Bearer ${apiKey}`,
     },

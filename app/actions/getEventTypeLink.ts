@@ -1,4 +1,3 @@
-import { CALCOM_URL } from "@/lib/const";
 import { getApiKey } from "@/lib/server/getApiKey";
 
 export async function getEventTypeLink(id: string): Promise<{
@@ -9,7 +8,7 @@ export async function getEventTypeLink(id: string): Promise<{
   const apiKey = getApiKey();
 
   //   Coach User
-  const userResponse = await fetch(`${CALCOM_URL}/me`, {
+  const userResponse = await fetch(`${process.env.CALCOM_URL!}/me`, {
     headers: {
       "cal-api-version": "2024-08-13",
       Authorization: `Bearer ${apiKey}`,
@@ -21,12 +20,15 @@ export async function getEventTypeLink(id: string): Promise<{
   const userData = await userResponse.json();
 
   //   Event Type
-  const eventTypeResponse = await fetch(`${CALCOM_URL}/event-types/${id}`, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
+  const eventTypeResponse = await fetch(
+    `${process.env.CALCOM_URL!}/event-types/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+      },
+      next: { revalidate: 60 },
     },
-    next: { revalidate: 60 },
-  });
+  );
   if (!eventTypeResponse.ok) {
     throw new Error(
       `Failed to fetch event type: ${eventTypeResponse.statusText}`,

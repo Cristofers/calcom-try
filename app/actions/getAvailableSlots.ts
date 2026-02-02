@@ -1,6 +1,5 @@
 import { AvailableSlot } from "@/lib/types";
 import { getApiKey } from "@/lib/server/getApiKey";
-import { CALCOM_URL } from "@/lib/const";
 import { TimeSlot } from "@/lib/types";
 export const TIMEZONE = "America/Santo_Domingo";
 
@@ -22,7 +21,7 @@ export async function getAvailableSlots(
     },
   };
 
-  const url = `${CALCOM_URL}/slots?start=${startStr}&end=${endStr}&eventTypeId=${eventTypeId}&timeZone=${TIMEZONE}`;
+  const url = `${process.env.CALCOM_URL!}/slots?start=${startStr}&end=${endStr}&eventTypeId=${eventTypeId}&timeZone=${TIMEZONE}`;
   const response = await fetch(url, options);
 
   if (!response.ok) {

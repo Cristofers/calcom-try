@@ -19,7 +19,7 @@ export async function getAllBookings({
     },
   };
 
-  const url = new URL("/v2/bookings", "https://api.cal.com");
+  const url = new URL("/bookings", process.env.CALCOM_URL!);
   url.searchParams.append("take", "100");
   if (eventTypeID) {
     url.searchParams.append("eventTypeId", eventTypeID);
