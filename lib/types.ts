@@ -54,8 +54,10 @@ export interface Booking {
   uid: string;
   title: string;
   status: string;
-  startTime: string;
-  endTime: string;
+  start: string;
+  end: string;
+  duration: number;
+  meetingUrl: string;
   location: string;
   eventType: {
     id: number;

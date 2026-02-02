@@ -15,21 +15,22 @@ export async function getAllBookings({
     method: "GET",
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      "cal-api-version": "2024-06-14",
+      "cal-api-version": "2024-08-13",
     },
   };
 
-  const url = new URL("/bookings", process.env.CALCOM_URL!);
-  url.searchParams.append("take", "100");
+  let url = `${process.env.CALCOM_URL}/bookings`;
   if (eventTypeID) {
-    url.searchParams.append("eventTypeId", eventTypeID);
+    url += `?eventTypeId=${eventTypeID}`;
   }
+  console.log("url:", url);
+  url = "https://api.cal.com/v2/bookings?eventTypeId=4604493";
 
-  const response = await fetch(url.toString(), options);
+  const response = await fetch(url, options);
   if (!response.ok) {
     throw new Error(`Failed to fetch bookings: ${response.statusText}`);
   }
 
   const result = await response.json();
-  return result.data.bookings || [];
+  return result.data || [];
 }
