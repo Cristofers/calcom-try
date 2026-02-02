@@ -22,6 +22,5 @@ export async function getEventType(id: string): Promise<{
   }
 
   const data = await response.json();
-  console.log("data->", data);
   return data.data.eventType;
 }

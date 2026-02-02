@@ -19,7 +19,6 @@ export async function getEventTypeLink(id: string): Promise<{
     throw new Error(`Failed to fetch user info: ${userResponse.statusText}`);
   }
   const userData = await userResponse.json();
-  console.log("userData->", userData);
 
   //   Event Type
   const eventTypeResponse = await fetch(`${CALCOM_URL}/event-types/${id}`, {
@@ -34,7 +33,6 @@ export async function getEventTypeLink(id: string): Promise<{
     );
   }
   const eventTypeData = await eventTypeResponse.json();
-  console.log("eventTypeData->", eventTypeData);
 
   return {
     username: userData.data.username as string,
