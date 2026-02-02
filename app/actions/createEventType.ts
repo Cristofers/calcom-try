@@ -1,5 +1,6 @@
 "use server";
 
+import { CALCOM_URL } from "@/lib/const";
 import type { CreateEventTypeInput } from "@/lib/types";
 
 export async function createEventType(input: CreateEventTypeInput) {
@@ -25,14 +26,15 @@ export async function createEventType(input: CreateEventTypeInput) {
     };
   }
 
-  const eventTypeData: CreateEventTypeInput = {
+  // Note: API expects "length" not "lengthInMinutes" due to a typo in Cal.com's code
+  const eventTypeData = {
     title,
     lengthInMinutes,
     slug,
   };
 
   try {
-    await fetch(`${CALCOM_URL}/event-types`, {
+    const response = await fetch(`${CALCOM_URL}/event-types`, {
       method: "POST",
       headers: {
         "cal-api-version": "2024-06-14",
@@ -42,8 +44,21 @@ export async function createEventType(input: CreateEventTypeInput) {
       body: JSON.stringify(eventTypeData),
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      console.error("Cal.com API error:", error);
+      return {
+        success: false,
+        error: error.message || "Failed to create event type",
+      };
+    }
+
+    const data = await response.json();
+    console.log("Event type created:", data);
+
     return {
       success: true,
+      data,
     };
   } catch (error) {
     return {
