@@ -54,7 +54,6 @@ export async function createEventType(input: CreateEventTypeInput) {
     }
 
     const data = await response.json();
-    console.log("Event type created:", data);
 
     return {
       success: true,

@@ -12,7 +12,6 @@ export async function getEventTypes(): Promise<EventType[]> {
     },
     // next: { revalidate: 60 }, // Revalidate every 60 seconds
   });
-  console.log("response/apiKey", response, apiKey);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch event types: ${response.statusText}`);

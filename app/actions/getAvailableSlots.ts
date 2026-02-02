@@ -21,10 +21,6 @@ export async function getAvailableSlots(
     },
   };
 
-  console.log("startStr", startStr);
-  console.log("endStr", endStr);
-  console.log("eventTypeId", eventTypeId);
-
   const response = await fetch(
     `${CALCOM_URL}/slots?start=${startStr}&end=${endStr}&eventTypeId=${eventTypeId}`,
     options,
