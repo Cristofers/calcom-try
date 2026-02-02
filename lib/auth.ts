@@ -25,7 +25,6 @@ export async function getApiKey(): Promise<string> {
     throw new Error("API key not found. Please set up your Cal.com API key.");
   }
 
-  console.log("apiKey", apiKey);
   return apiKey;
 }
 

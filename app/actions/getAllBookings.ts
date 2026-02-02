@@ -23,8 +23,6 @@ export async function getAllBookings({
   if (eventTypeID) {
     url += `?eventTypeId=${eventTypeID}`;
   }
-  console.log("url:", url);
-  url = "https://api.cal.com/v2/bookings?eventTypeId=4604493";
 
   const response = await fetch(url, options);
   if (!response.ok) {
