@@ -8,7 +8,7 @@ export async function getAvailableSlots(
   startDate: Date,
   endDate: Date,
 ): Promise<AvailableSlot[]> {
-  const apiKey = getApiKey();
+  const apiKey = await getApiKey();
 
   const startStr = startDate.toISOString().split("T")[0];
   const endStr = endDate.toISOString().split("T")[0];

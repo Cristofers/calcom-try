@@ -7,7 +7,7 @@ export async function getEventType(id: string): Promise<{
   description: string;
   length: number;
 }> {
-  const apiKey = getApiKey();
+  const apiKey = await getApiKey();
 
   const response = await fetch(`${process.env.CALCOM_URL!}/event-types/${id}`, {
     headers: {

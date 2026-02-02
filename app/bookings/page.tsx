@@ -83,15 +83,12 @@ export default async function BookingsPage() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {bookings.map((booking) => {
-                    const startDate = new Date(booking.startTime);
-                    const endDate = new Date(booking.endTime);
-                    const duration = Math.round(
-                      (endDate.getTime() - startDate.getTime()) / (1000 * 60),
-                    );
+                    const startDate = new Date(booking.start);
+                    const endDate = new Date(booking.end);
                     const statusColor =
-                      booking.status === "ACCEPTED"
+                      booking.status === "accepted"
                         ? "bg-green-100 text-green-800"
-                        : booking.status === "PENDING"
+                        : booking.status === "pending"
                           ? "bg-yellow-100 text-yellow-800"
                           : "bg-red-100 text-red-800";
 
@@ -138,7 +135,7 @@ export default async function BookingsPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                          {duration} min
+                          {booking.duration} min
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -148,17 +145,16 @@ export default async function BookingsPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          {booking.location &&
-                            booking.location.includes("integrations:daily") && (
-                              <a
-                                href={`https://app.cal.com/video/${booking.uid}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-800 font-medium"
-                              >
-                                Join Meeting →
-                              </a>
-                            )}
+                          {booking.meetingUrl && (
+                            <a
+                              href={booking.meetingUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-800 font-medium"
+                            >
+                              Join Meeting →
+                            </a>
+                          )}
                         </td>
                       </tr>
                     );

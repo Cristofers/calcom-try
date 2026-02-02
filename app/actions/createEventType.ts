@@ -1,38 +1,33 @@
 "use server";
 
 import type { CreateEventTypeInput } from "@/lib/types";
+import { getApiKey } from "@/lib/auth";
 
 export async function createEventType(input: CreateEventTypeInput) {
-  const apiKey = process.env.CAL_API_KEY;
-  if (!apiKey) {
-    return {
-      success: false,
-      error: "CAL_API_KEY environment variable is not set",
-    };
-  }
-
-  const { lengthInMinutes, slug, title } = input;
-  if (!title || !lengthInMinutes || !slug) {
-    return {
-      success: false,
-      error: "All fields are required",
-    };
-  }
-  if (lengthInMinutes <= 0) {
-    return {
-      success: false,
-      error: "Duration must be a positive number",
-    };
-  }
-
-  // Note: API expects "length" not "lengthInMinutes" due to a typo in Cal.com's code
-  const eventTypeData = {
-    title,
-    lengthInMinutes,
-    slug,
-  };
-
   try {
+    const apiKey = await await getApiKey();
+
+    const { lengthInMinutes, slug, title } = input;
+    if (!title || !lengthInMinutes || !slug) {
+      return {
+        success: false,
+        error: "All fields are required",
+      };
+    }
+    if (lengthInMinutes <= 0) {
+      return {
+        success: false,
+        error: "Duration must be a positive number",
+      };
+    }
+
+    // Note: API expects "length" not "lengthInMinutes" due to a typo in Cal.com's code
+    const eventTypeData = {
+      title,
+      lengthInMinutes,
+      slug,
+    };
+
     const response = await fetch(`${process.env.CALCOM_URL}/event-types`, {
       method: "POST",
       headers: {

@@ -5,7 +5,7 @@ export async function getEventTypeLink(id: string): Promise<{
   slug: string;
   link: string;
 }> {
-  const apiKey = getApiKey();
+  const apiKey = await getApiKey();
 
   //   Coach User
   const userResponse = await fetch(`${process.env.CALCOM_URL!}/me`, {

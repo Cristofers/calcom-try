@@ -2,7 +2,7 @@ import { getApiKey } from "@/lib/server/getApiKey";
 import { EventType } from "@/lib/types";
 
 export async function getEventTypes(): Promise<EventType[]> {
-  const apiKey = getApiKey();
+  const apiKey = await getApiKey();
 
   const response = await fetch(`${process.env.CALCOM_URL!}/event-types`, {
     headers: {
@@ -11,6 +11,7 @@ export async function getEventTypes(): Promise<EventType[]> {
     },
   });
 
+  console.log("response->", response, `Bearer ${apiKey}`);
   if (!response.ok) {
     throw new Error(`Failed to fetch event types: ${response.statusText}`);
   }

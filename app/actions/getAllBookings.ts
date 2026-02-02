@@ -10,7 +10,7 @@ interface GetAllBookingsProps {
 export async function getAllBookings({
   eventTypeID,
 }: GetAllBookingsProps): Promise<Booking[]> {
-  const apiKey = getApiKey();
+  const apiKey = await getApiKey();
   const options = {
     method: "GET",
     headers: {
