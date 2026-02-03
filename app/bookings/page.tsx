@@ -98,9 +98,11 @@ export default async function BookingsPage() {
                           <div className="text-sm font-medium text-gray-900">
                             {booking.title}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {booking.eventType.slug}
-                          </div>
+                          {booking.eventType && (
+                            <div className="text-sm text-gray-500">
+                              {booking.eventType.slug}
+                            </div>
+                          )}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           {booking.attendees.length > 0 && (

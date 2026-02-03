@@ -59,7 +59,7 @@ export interface Booking {
   duration: number;
   meetingUrl: string;
   location: string;
-  eventType: {
+  eventType?: {
     id: number;
     slug: string;
   };
