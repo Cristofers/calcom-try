@@ -104,33 +104,24 @@ export const EventTypeView = ({
                       <div className="space-y-1 text-sm text-gray-600">
                         <p>
                           <span className="font-medium">Date:</span>{" "}
-                          {new Date(booking.startTime).toLocaleDateString(
-                            "en-US",
-                            {
-                              weekday: "long",
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            },
-                          )}
+                          {new Date(booking.start).toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
                         </p>
                         <p>
                           <span className="font-medium">Time:</span>{" "}
-                          {new Date(booking.startTime).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            },
-                          )}{" "}
+                          {new Date(booking.start).toLocaleTimeString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}{" "}
                           -{" "}
-                          {new Date(booking.endTime).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            },
-                          )}
+                          {new Date(booking.end).toLocaleTimeString("en-US", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
                         </p>
                         {booking.attendees && booking.attendees.length > 0 && (
                           <p>
